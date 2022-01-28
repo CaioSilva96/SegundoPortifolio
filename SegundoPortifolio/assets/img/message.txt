@@ -1,0 +1,423 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Tempo de geração: 17-Dez-2021 às 17:21
+-- Versão do servidor: 10.4.21-MariaDB
+-- versão do PHP: 8.0.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Banco de dados: `caio`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `agencia`
+--
+
+CREATE TABLE `agencia` (
+  `id_agencia` int(11) NOT NULL,
+  `nome` varchar(40) NOT NULL,
+  `contacto` int(11) DEFAULT NULL,
+  `morada` varchar(50) DEFAULT NULL,
+  `NIF` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `agencia`
+--
+
+INSERT INTO `agencia` (`id_agencia`, `nome`, `contacto`, `morada`, `NIF`) VALUES
+(1, 'CleitonTour´s', 195487523, 'Rua Joao Mantas lt5 3F', 963258741),
+(2, 'RogerioTour´s', 741258963, 'Av N10 LT.3 5F', 852145698),
+(3, 'AdemilsonTour´s', 512154241, 'Rua Jonilson Neves LT.87 7E', 852741963),
+(4, 'CleitinhoTour´s', 159756486, 'AV N57', 654852789),
+(5, 'MamacitaTour´s', 753951456, 'Rua mamae', 951753654),
+(6, 'HenriqueTour´s', 852456987, 'Rua Henrique', 753654897);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `atividades`
+--
+
+CREATE TABLE `atividades` (
+  `id_atividade` int(11) NOT NULL,
+  `nome_atividade` varchar(20) NOT NULL,
+  `descricao` varchar(100) NOT NULL,
+  `titulo` varchar(30) NOT NULL,
+  `local` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `atividades`
+--
+
+INSERT INTO `atividades` (`id_atividade`, `nome_atividade`, `descricao`, `titulo`, `local`) VALUES
+(1, 'Jungle', 'Linda caminhada pela floresta', 'Uma incrível floresta', 'Floresta da alcachofra'),
+(2, 'Montanha', 'Bela visão e exercícios pela montanha do Himalaia', 'A montanha dos que não foram', 'Montanha dos Himalaia´s'),
+(3, 'Antartica', 'Uma deslumbrante atividade pelos montes gelados da Antartica ', 'Os pinguins carecas', 'Lado Sul da Antartica'),
+(4, 'Canoagem', 'Sensações radicais nas Cataratas do Iguaçu', 'Uma visão inesquecivel', 'Foz do iguaçu, Paraná, Brasil'),
+(5, 'Paraquedismo', 'Salto realizado em queda livre, normalmente entre 3 e 4 mil metros de altura, onde o “passageiro” en', 'Uma experiência incrível', 'Áustria'),
+(6, 'Surfe', 'Maresias é abraçada pela floresta tropical, ostentando uma paisagem e fauna incríveis', 'Surfando no talento', 'Maresias, Brasil');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `clientes`
+--
+
+CREATE TABLE `clientes` (
+  `id_cliente` int(11) NOT NULL,
+  `nome` varchar(40) NOT NULL,
+  `contacto` int(11) DEFAULT NULL,
+  `Data_Nascimento` date DEFAULT NULL,
+  `NIF` int(9) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `clientes`
+--
+
+INSERT INTO `clientes` (`id_cliente`, `nome`, `contacto`, `Data_Nascimento`, `NIF`, `email`) VALUES
+(1, 'Caio Silva', 965485741, '2003-03-15', 987456321, 'caio.silva.29601@esgc.pt'),
+(2, 'Gabriel Ribeiro', 985872456, '2004-02-08', 2147483647, 'Gabriel.Ribeiro.29789@esgc.pt'),
+(3, 'João Antunes', 967546821, '2005-01-10', 2147483647, 'Joao.antunes.29748@esgc.pt'),
+(4, 'Diogo Oliveira', 965485741, '2003-05-18', 2147483647, 'Diogo.Oliveira.29546@esgc.pt'),
+(5, 'Luiz Nogueira', 965745865, '2004-09-29', 987753654, 'Luiz.nogueira.29685@esgc.pt'),
+(6, 'João Boeiero', 965962147, '2005-12-12', 852364951, 'joao.boeiero.29675@esgc.pt');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `clientes_agencia`
+--
+
+CREATE TABLE `clientes_agencia` (
+  `id_cliente` int(11) NOT NULL,
+  `id_agencia` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `clientes_agencia`
+--
+
+INSERT INTO `clientes_agencia` (`id_cliente`, `id_agencia`) VALUES
+(1, 2),
+(2, 3),
+(3, 4),
+(4, 2),
+(5, 4),
+(6, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `compras`
+--
+
+CREATE TABLE `compras` (
+  `id_compra` int(11) NOT NULL,
+  `id_pacote` int(11) NOT NULL,
+  `id_cliente` int(11) NOT NULL,
+  `preco` decimal(15,2) NOT NULL,
+  `data_compra` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `contratos`
+--
+
+CREATE TABLE `contratos` (
+  `id_contrato` int(11) NOT NULL,
+  `id_funcionario` int(11) NOT NULL,
+  `id_agencia` int(11) NOT NULL,
+  `data_assinatura` datetime NOT NULL,
+  `prazo` datetime NOT NULL,
+  `valor` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `funcionarios`
+--
+
+CREATE TABLE `funcionarios` (
+  `id_funcionario` int(11) NOT NULL,
+  `nome` varchar(40) NOT NULL,
+  `contacto` int(11) DEFAULT NULL,
+  `Data_Nascimento` date DEFAULT NULL,
+  `NIF` int(9) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `horario_atividade`
+--
+
+CREATE TABLE `horario_atividade` (
+  `id_atividade` int(11) NOT NULL,
+  `id_plano` int(11) NOT NULL,
+  `data_hora_inicio` datetime NOT NULL,
+  `data_hora_termino` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `hoteis`
+--
+
+CREATE TABLE `hoteis` (
+  `id_hotel` int(11) NOT NULL,
+  `nome_hotel` varchar(20) NOT NULL,
+  `contacto` int(13) NOT NULL,
+  `n_quartos` int(11) NOT NULL,
+  `endereco` varchar(200) NOT NULL,
+  `email` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `hoteis`
+--
+
+INSERT INTO `hoteis` (`id_hotel`, `nome_hotel`, `contacto`, `n_quartos`, `endereco`, `email`) VALUES
+(1, 'The Oberoi Cecil', 967951487, 35, 'The Oberoi Cecil, Shimla é um estabelecimento no centro da cidade e perto da estação de trem, em uma área que conta com uma boa área de compras.\r\n\r\nRua the Oberoi Cecil N 3', 'theoberoi@cecil.com');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `pacotes_viagens`
+--
+
+CREATE TABLE `pacotes_viagens` (
+  `id_pacote` int(11) NOT NULL,
+  `id_agencia` int(11) NOT NULL,
+  `id_plano` int(11) NOT NULL,
+  `nome_pacote` varchar(20) NOT NULL,
+  `titulo` varchar(30) NOT NULL,
+  `descricao` varchar(100) NOT NULL,
+  `data_ida` datetime NOT NULL,
+  `data_volta` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `voos`
+--
+
+CREATE TABLE `voos` (
+  `id_voo` int(11) NOT NULL,
+  `nome_voo` varchar(20) NOT NULL,
+  `nome_aviao` varchar(20) NOT NULL,
+  `empresa` varchar(20) NOT NULL,
+  `contacto_empresa` int(13) NOT NULL,
+  `data_hora_ida` datetime NOT NULL,
+  `data_hora_volta` datetime NOT NULL,
+  `capacidade` int(11) NOT NULL,
+  `preco_voo` decimal(15,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `voos`
+--
+
+INSERT INTO `voos` (`id_voo`, `nome_voo`, `nome_aviao`, `empresa`, `contacto_empresa`, `data_hora_ida`, `data_hora_volta`, `capacidade`, `preco_voo`) VALUES
+(1, 'Espanha', 'AirPlano445', 'TAP', 852697412, '2021-12-23 08:10:01', '2021-12-31 15:10:01', 54, '1200.00');
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices para tabela `agencia`
+--
+ALTER TABLE `agencia`
+  ADD PRIMARY KEY (`id_agencia`);
+
+--
+-- Índices para tabela `atividades`
+--
+ALTER TABLE `atividades`
+  ADD PRIMARY KEY (`id_atividade`);
+
+--
+-- Índices para tabela `clientes`
+--
+ALTER TABLE `clientes`
+  ADD PRIMARY KEY (`id_cliente`);
+
+--
+-- Índices para tabela `clientes_agencia`
+--
+ALTER TABLE `clientes_agencia`
+  ADD KEY `fk_id_cliente` (`id_cliente`),
+  ADD KEY `fk_id_agencia` (`id_agencia`);
+
+--
+-- Índices para tabela `compras`
+--
+ALTER TABLE `compras`
+  ADD PRIMARY KEY (`id_compra`),
+  ADD KEY `fk_id_pacote` (`id_pacote`),
+  ADD KEY `fk_id_cliente` (`id_cliente`);
+
+--
+-- Índices para tabela `contratos`
+--
+ALTER TABLE `contratos`
+  ADD PRIMARY KEY (`id_contrato`),
+  ADD KEY `fk_id_funcionarios` (`id_funcionario`),
+  ADD KEY `fk_id_agencia` (`id_agencia`);
+
+--
+-- Índices para tabela `funcionarios`
+--
+ALTER TABLE `funcionarios`
+  ADD PRIMARY KEY (`id_funcionario`);
+
+--
+-- Índices para tabela `horario_atividade`
+--
+ALTER TABLE `horario_atividade`
+  ADD KEY `fk_id_atividade` (`id_atividade`),
+  ADD KEY `fk_id_plano` (`id_plano`);
+
+--
+-- Índices para tabela `hoteis`
+--
+ALTER TABLE `hoteis`
+  ADD PRIMARY KEY (`id_hotel`);
+
+--
+-- Índices para tabela `pacotes_viagens`
+--
+ALTER TABLE `pacotes_viagens`
+  ADD PRIMARY KEY (`id_pacote`),
+  ADD KEY `fk_id_agencia` (`id_agencia`),
+  ADD KEY `fk_id_plano` (`id_plano`);
+
+--
+-- Índices para tabela `voos`
+--
+ALTER TABLE `voos`
+  ADD PRIMARY KEY (`id_voo`);
+
+--
+-- AUTO_INCREMENT de tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `agencia`
+--
+ALTER TABLE `agencia`
+  MODIFY `id_agencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de tabela `atividades`
+--
+ALTER TABLE `atividades`
+  MODIFY `id_atividade` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de tabela `clientes`
+--
+ALTER TABLE `clientes`
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de tabela `compras`
+--
+ALTER TABLE `compras`
+  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `contratos`
+--
+ALTER TABLE `contratos`
+  MODIFY `id_contrato` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `funcionarios`
+--
+ALTER TABLE `funcionarios`
+  MODIFY `id_funcionario` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `hoteis`
+--
+ALTER TABLE `hoteis`
+  MODIFY `id_hotel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `pacotes_viagens`
+--
+ALTER TABLE `pacotes_viagens`
+  MODIFY `id_pacote` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `voos`
+--
+ALTER TABLE `voos`
+  MODIFY `id_voo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Restrições para despejos de tabelas
+--
+
+--
+-- Limitadores para a tabela `clientes_agencia`
+--
+ALTER TABLE `clientes_agencia`
+  ADD CONSTRAINT `fk_id_agencias` FOREIGN KEY (`id_agencia`) REFERENCES `agencia` (`id_agencia`),
+  ADD CONSTRAINT `fk_id_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`);
+
+--
+-- Limitadores para a tabela `compras`
+--
+ALTER TABLE `compras`
+  ADD CONSTRAINT `fk_id_cliente1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`),
+  ADD CONSTRAINT `fk_id_pacote` FOREIGN KEY (`id_pacote`) REFERENCES `pacotes_viagens` (`id_pacote`);
+
+--
+-- Limitadores para a tabela `contratos`
+--
+ALTER TABLE `contratos`
+  ADD CONSTRAINT `fk_id_agencia` FOREIGN KEY (`id_agencia`) REFERENCES `agencia` (`id_agencia`),
+  ADD CONSTRAINT `fk_id_funcionario` FOREIGN KEY (`id_funcionario`) REFERENCES `funcionarios` (`id_funcionario`);
+
+--
+-- Limitadores para a tabela `horario_atividade`
+--
+ALTER TABLE `horario_atividade`
+  ADD CONSTRAINT `fk_id_atividade` FOREIGN KEY (`id_atividade`) REFERENCES `atividades` (`id_atividade`),
+  ADD CONSTRAINT `fk_id_plano1` FOREIGN KEY (`id_plano`) REFERENCES `plano_viagem` (`id_plano`);
+
+--
+-- Limitadores para a tabela `pacotes_viagens`
+--
+ALTER TABLE `pacotes_viagens`
+  ADD CONSTRAINT `fk_id_plano` FOREIGN KEY (`id_plano`) REFERENCES `plano_viagem` (`id_plano`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
